@@ -16,19 +16,15 @@ export function SearchBar() {
   const apiUrl = `https://aij1hx90oj.execute-api.ap-southeast-2.amazonaws.com/prod/all`;
   const { loading, data: stocks, error } = useData(apiUrl);
 
-  const screenWidth = Dimensions.get("window").width; // Get the screen width
+  const screenWidth = Dimensions.get("window").width;
 
   function updateText(newText) {
     setState({ txt: newText });
-    console.log("User Input:", newText); // Log user input
   }
 
-  // Filter stocks based on user input
   const filteredStocks = stocks.filter((stock) =>
     stock.symbol.includes(state.txt)
   );
-
-  console.log("Filtered Stocks:", filteredStocks);
 
   return (
     <View style={styles.container}>
@@ -52,7 +48,7 @@ export function SearchBar() {
         <ScrollView style={styles.scrollView}>
           {filteredStocks.map((item) => (
             <Text key={item.symbol}>
-              {item.symbol} - {item.name} - {item.industry}
+              {item.symbol} - {item.name}
             </Text>
           ))}
         </ScrollView>
@@ -74,7 +70,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 60,
     padding: 5,
-    backgroundColor: "grey",
+    backgroundColor: "lightgrey",
     borderRadius: 20,
     marginTop: 100,
   },
