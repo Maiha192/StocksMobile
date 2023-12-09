@@ -10,8 +10,8 @@ import {
 import Icon from "react-native-vector-icons/Ionicons";
 import { useData } from "../api/api";
 
-export function SearchBar() {
-  const [state, setState] = useState({ txt: "" });
+export default function SearchBar() {
+  const [state, setState] = useState("");
 
   const apiUrl = `https://aij1hx90oj.execute-api.ap-southeast-2.amazonaws.com/prod/all`;
   const { loading, data: stocks, error } = useData(apiUrl);
@@ -19,12 +19,25 @@ export function SearchBar() {
   const screenWidth = Dimensions.get("window").width;
 
   function updateText(newText) {
-    setState({ txt: newText });
+    setState(newText);
   }
 
-  const filteredStocks = stocks.filter((stock) =>
-    stock.symbol.includes(state.txt)
-  );
+  const filteredStocks = stocks.filter((stock) => {
+    const searchText = state.toLowerCase();
+    return (
+      stock.symbol.toLowerCase().includes(searchText) ||
+      stock.name.toLowerCase().includes(searchText)
+    );
+  });
+  console.log({ stocks });
+  if (loading) {
+    return <Text>Loading...</Text>;
+  }
+
+  if (error) {
+    return <Text>Error: {error.message}</Text>;
+  }
+  console.log({ filteredStocks });
 
   return (
     <View style={styles.container}>
@@ -32,24 +45,21 @@ export function SearchBar() {
         <Icon name="ios-search" size={24} color="white" style={styles.icon} />
         <TextInput
           style={styles.input}
-          placeholder="Enter stock symbol"
+          placeholder="Enter company name or stock symbol"
           placeholderTextColor="white"
-          defaultValue={state.txt}
+          defaultValue={state}
           onChangeText={updateText}
           autoFocus={true}
           autoCorrect={true}
         />
       </View>
-      {loading ? (
-        <Text>Loading...</Text>
-      ) : error ? (
-        <Text>Error: {error.message}</Text>
-      ) : (
+      {filteredStocks && (
         <ScrollView style={styles.scrollView}>
           {filteredStocks.map((item) => (
-            <Text key={item.symbol}>
-              {item.symbol} - {item.name}
-            </Text>
+            <View key={item.symbol} style={styles.stockItem}>
+              <Text style={styles.stockSymbol}>{item.symbol}</Text>
+              <Text style={styles.companyName}>{item.name}</Text>
+            </View>
           ))}
         </ScrollView>
       )}
@@ -62,7 +72,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "white",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "flex-start",
   },
   inputContainer: {
     flexDirection: "row",
@@ -72,7 +82,7 @@ const styles = StyleSheet.create({
     padding: 5,
     backgroundColor: "lightgrey",
     borderRadius: 20,
-    marginTop: 100,
+    marginTop: 0,
   },
   icon: {
     marginLeft: 10,
@@ -86,5 +96,20 @@ const styles = StyleSheet.create({
   scrollView: {
     flex: 1,
     width: "100%",
+  },
+  stockItem: {
+    borderBottomWidth: 1,
+    borderBottomColor: "lightgray",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+  },
+  stockSymbol: {
+    fontWeight: "bold",
+    fontSize: 18,
+    color: "black",
+  },
+  companyName: {
+    fontSize: 14,
+    color: "gray",
   },
 });
