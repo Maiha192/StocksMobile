@@ -3,7 +3,7 @@ import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 import * as React from "react";
 
 import TabBarIcon from "../components/TabBarIcon";
-import ChartScreen from "../screens/ChartScreen";
+import HistoryScreen from "../screens/HistoryScreen";
 import HomeScreen from "../screens/HomeScreen";
 import SearchScreen from "../screens/SearchScreen";
 import StocksScreen from "../screens/StocksScreen";
@@ -51,10 +51,10 @@ export default function BottomTabNavigator({ navigation, route }) {
         }}
       />
       <BottomTab.Screen
-        name="Chart"
-        component={ChartScreen}
+        name="History"
+        component={HistoryScreen}
         options={{
-          title: "CHART",
+          title: "HISTORY",
           tabBarIcon: ({ focused }) => (
             <TabBarIcon focused={focused} name="ios-trending-up" />
           ),
@@ -74,8 +74,8 @@ function getHeaderTitle(route) {
       return "Search";
     case "Stocks":
       return "Stocks";
-    case "Chart":
-      return "Chart";
+    case "History":
+      return "History";
     default:
       return "Home";
   }

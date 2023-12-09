@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import { WatchListContext } from "../contexts/WatchListProvider";
 import { getData } from "../api/api";
+import { useNavigation } from "@react-navigation/core";
 
 export default function StocksScreen() {
   const { watchList } = useContext(WatchListContext);
@@ -22,7 +23,7 @@ export default function StocksScreen() {
           const stockHistory = await getData(
             `https://aij1hx90oj.execute-api.ap-southeast-2.amazonaws.com/prod/history?symbol=${symbol}`
           );
-          data[symbol] = stockHistory[0]; // Assuming the most recent data is at index 0
+          data[symbol] = stockHistory[0];
         } catch (error) {
           console.error("Error fetching stock history:", error);
         }
@@ -35,8 +36,11 @@ export default function StocksScreen() {
     }
   }, [watchList]);
 
+  const navigation = useNavigation();
+
   const handleSelectStock = (symbol) => {
     setSelectedStock(stockData[symbol]);
+    navigation.navigate("History", { symbol: symbol });
   };
 
   const renderStockItem = (symbol) => {
