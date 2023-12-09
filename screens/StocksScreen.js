@@ -1,9 +1,15 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
-import { WatchListContext } from '../contexts/WatchListProvider';
-import { getData } from '../api/api';
+import React, { useContext, useEffect, useState } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
+import { WatchListContext } from "../contexts/WatchListProvider";
+import { getData } from "../api/api";
 
-export default function StocksScreen({ navigation }) {
+export default function StocksScreen() {
   const { watchList } = useContext(WatchListContext);
   const [stockData, setStockData] = useState({});
   const [selectedStock, setSelectedStock] = useState(null);
@@ -18,13 +24,15 @@ export default function StocksScreen({ navigation }) {
           );
           data[symbol] = stockHistory[0]; // Assuming the most recent data is at index 0
         } catch (error) {
-          console.error('Error fetching stock history:', error);
+          console.error("Error fetching stock history:", error);
         }
       }
       setStockData(data);
     };
 
-    fetchStockData();
+    if (watchList.length > 0) {
+      fetchStockData();
+    }
   }, [watchList]);
 
   const handleSelectStock = (symbol) => {
@@ -33,18 +41,26 @@ export default function StocksScreen({ navigation }) {
 
   const renderStockItem = (symbol) => {
     const stock = stockData[symbol];
-    // Ensure stock is defined before trying to access its properties
     if (!stock) {
       return null; // or some placeholder content
     }
-    const percentageChange = ((stock.close - stock.open) / stock.open * 100).toFixed(2);
-    const changeColor = percentageChange >= 0 ? '#4CAF50' : '#F44336';
-  
+    const percentageChange = (
+      ((stock.close - stock.open) / stock.open) *
+      100
+    ).toFixed(2);
+    const changeColor = percentageChange >= 0 ? "#4CAF50" : "#F44336";
+
     return (
-      <TouchableOpacity key={symbol} style={styles.stockItem} onPress={() => handleSelectStock(symbol)}>
+      <TouchableOpacity
+        key={symbol}
+        style={styles.stockItem}
+        onPress={() => handleSelectStock(symbol)}
+      >
         <Text style={styles.stockSymbol}>{symbol}</Text>
         <Text style={styles.stockPrice}>{stock.close}</Text>
-        <Text style={[styles.stockChange, { color: changeColor }]}>{percentageChange}%</Text>
+        <Text style={[styles.stockChange, { color: changeColor }]}>
+          {percentageChange}%
+        </Text>
       </TouchableOpacity>
     );
   };
@@ -54,15 +70,6 @@ export default function StocksScreen({ navigation }) {
       <ScrollView style={styles.scrollView}>
         {watchList.map(renderStockItem)}
       </ScrollView>
-      {selectedStock && (
-        <View style={styles.detailView}>
-          <Text>Open: {selectedStock.open}</Text>
-          <Text>Close: {selectedStock.close}</Text>
-          <Text>Low: {selectedStock.low}</Text>
-          <Text>High: {selectedStock.high}</Text>
-          <Text>Volume: {selectedStock.volumes}</Text>
-        </View>
-      )}
     </View>
   );
 }
@@ -70,21 +77,21 @@ export default function StocksScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: "white",
   },
   scrollView: {
     flex: 1,
   },
   stockItem: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     padding: 16,
     borderBottomWidth: 1,
-    borderBottomColor: '#e0e0e0',
-    backgroundColor: 'white',
+    borderBottomColor: "#e0e0e0",
+    backgroundColor: "white",
   },
   stockSymbol: {
-    fontWeight: 'bold',
+    fontWeight: "bold",
     fontSize: 16,
   },
   stockPrice: {
@@ -96,6 +103,6 @@ const styles = StyleSheet.create({
   detailView: {
     padding: 16,
     borderTopWidth: 1,
-    borderTopColor: '#e0e0e0',
+    borderTopColor: "#e0e0e0",
   },
 });

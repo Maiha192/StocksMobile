@@ -7,6 +7,7 @@ import {
   Text,
   ScrollView,
   TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { useData } from "../api/api";
@@ -32,7 +33,11 @@ export default function SearchBar() {
   );
 
   if (loading) {
-    return <Text>Loading...</Text>;
+    return (
+      <View style={styles.centered}>
+        <ActivityIndicator size="large" color="grey" />
+      </View>
+    );
   }
 
   if (error) {
@@ -79,6 +84,11 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     alignItems: "center",
     justifyContent: "flex-start",
+  },
+  centered: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
   inputContainer: {
     flexDirection: "row",
