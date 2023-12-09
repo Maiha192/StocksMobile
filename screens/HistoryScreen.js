@@ -45,7 +45,9 @@ export default function HistoryScreen({ route }) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.stockName}>{stockName} ({symbol})</Text>
+      <Text style={styles.stockName}>
+        {stockName} ({symbol})
+      </Text>
       <View style={styles.headerContainer}>
         <View style={styles.fixedHeader}>
           <Text style={[styles.headerCell, styles.date]}>Time</Text>
@@ -80,15 +82,15 @@ const styles = StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderTopWidth: StyleSheet.hairlineWidth,
     borderColor: "#ddd",
-    position: 'absolute',
-    width: '100%',
+    position: "absolute",
+    width: "100%",
     zIndex: 1,
     paddingHorizontal: 10,
     paddingVertical: 10,
   },
   headerCell: {
-    flex: 1, 
-    padding:10,
+    flex: 1,
+    padding: 10,
     justifyContent: "center",
     alignItems: "center",
     textAlign: "center",
@@ -102,18 +104,18 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   cell: {
-    flex: 1, 
-    justifyContent: 'center',
-    alignItems: 'center',
-    textAlign: 'center', 
-    padding: 10, 
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    textAlign: "center",
+    padding: 10,
   },
   date: {
-    flex: 2,  
+    flex: 2,
     textAlign: "left",
   },
   number: {
-    flex: 1,  
+    flex: 1,
   },
   stockName: {
     fontSize: 20,
@@ -122,6 +124,6 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   list: {
-    marginTop: 60
-  }
+    marginTop: 60,
+  },
 });
