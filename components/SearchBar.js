@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   StyleSheet,
   View,
@@ -6,30 +6,31 @@ import {
   Dimensions,
   Text,
   ScrollView,
+  TouchableOpacity,
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { useData } from "../api/api";
+import { WatchListContext } from "../contexts/WatchListProvider";
+import { useNavigation } from "@react-navigation/native"; // Import useNavigation
 
 export default function SearchBar() {
   const [state, setState] = useState("");
-
   const apiUrl = `https://aij1hx90oj.execute-api.ap-southeast-2.amazonaws.com/prod/all`;
   const { loading, data: stocks, error } = useData(apiUrl);
-
   const screenWidth = Dimensions.get("window").width;
+  const navigation = useNavigation(); // Use the useNavigation hook
+  const { addToWatchList } = useContext(WatchListContext); // Correctly destructure from context
 
   function updateText(newText) {
     setState(newText);
   }
 
-  const filteredStocks = stocks.filter((stock) => {
-    const searchText = state.toLowerCase();
-    return (
-      stock.symbol.toLowerCase().includes(searchText) ||
-      stock.name.toLowerCase().includes(searchText)
-    );
-  });
-  console.log({ stocks });
+  const filteredStocks = stocks.filter(
+    (stock) =>
+      stock.symbol.toLowerCase().includes(state.toLowerCase()) ||
+      stock.name.toLowerCase().includes(state.toLowerCase())
+  );
+
   if (loading) {
     return <Text>Loading...</Text>;
   }
@@ -37,7 +38,6 @@ export default function SearchBar() {
   if (error) {
     return <Text>Error: {error.message}</Text>;
   }
-  console.log({ filteredStocks });
 
   return (
     <View style={styles.container}>
@@ -47,22 +47,28 @@ export default function SearchBar() {
           style={styles.input}
           placeholder="Enter company name or stock symbol"
           placeholderTextColor="white"
-          defaultValue={state}
+          value={state}
           onChangeText={updateText}
           autoFocus={true}
           autoCorrect={true}
         />
       </View>
-      {filteredStocks && (
-        <ScrollView style={styles.scrollView}>
-          {filteredStocks.map((item) => (
-            <View key={item.symbol} style={styles.stockItem}>
+      <ScrollView style={styles.scrollView}>
+        {filteredStocks.map((item) => (
+          <TouchableOpacity
+            key={item.symbol}
+            onPress={() => {
+              addToWatchList(item.symbol);
+              navigation.navigate("Stocks");
+            }}
+          >
+            <View style={styles.stockItem}>
               <Text style={styles.stockSymbol}>{item.symbol}</Text>
               <Text style={styles.companyName}>{item.name}</Text>
             </View>
-          ))}
-        </ScrollView>
-      )}
+          </TouchableOpacity>
+        ))}
+      </ScrollView>
     </View>
   );
 }
