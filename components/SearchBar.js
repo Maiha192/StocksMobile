@@ -8,28 +8,44 @@ import {
   ScrollView,
   TouchableOpacity,
   ActivityIndicator,
+  Modal,
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { useData } from "../api/api";
 import { WatchListContext } from "../contexts/WatchListProvider";
-import { useNavigation } from "@react-navigation/native"; // Import useNavigation
+import { useNavigation } from "@react-navigation/native";
 
 export default function SearchBar() {
-  const [state, setState] = useState("");
+  const [searchText, setSearchText] = useState("");
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedStock, setSelectedStock] = useState(null);
   const apiUrl = `https://aij1hx90oj.execute-api.ap-southeast-2.amazonaws.com/prod/all`;
   const { loading, data: stocks, error } = useData(apiUrl);
   const screenWidth = Dimensions.get("window").width;
-  const navigation = useNavigation(); // Use the useNavigation hook
-  const { addToWatchList } = useContext(WatchListContext); // Correctly destructure from context
+  const navigation = useNavigation();
+  const { addToWatchList } = useContext(WatchListContext);
 
-  function updateText(newText) {
-    setState(newText);
+  function updateSearchText(newText) {
+    setSearchText(newText);
+  }
+
+  function handleStockSelect(stock) {
+    setSelectedStock(stock);
+    setModalVisible(true);
+  }
+
+  function confirmAddToWatchList() {
+    if (selectedStock) {
+      addToWatchList(selectedStock.symbol);
+      setModalVisible(false);
+      navigation.navigate("Stocks");
+    }
   }
 
   const filteredStocks = stocks.filter(
     (stock) =>
-      stock.symbol.toLowerCase().includes(state.toLowerCase()) ||
-      stock.name.toLowerCase().includes(state.toLowerCase())
+      stock.symbol.toLowerCase().includes(searchText.toLowerCase()) ||
+      stock.name.toLowerCase().includes(searchText.toLowerCase())
   );
 
   if (loading) {
@@ -52,20 +68,17 @@ export default function SearchBar() {
           style={styles.input}
           placeholder="Enter company name or stock symbol"
           placeholderTextColor="white"
-          value={state}
-          onChangeText={updateText}
+          value={searchText}
+          onChangeText={updateSearchText}
           autoFocus={true}
-          autoCorrect={true}
+          autoCorrect={false}
         />
       </View>
       <ScrollView style={styles.scrollView}>
         {filteredStocks.map((item) => (
           <TouchableOpacity
             key={item.symbol}
-            onPress={() => {
-              addToWatchList(item.symbol);
-              navigation.navigate("Stocks");
-            }}
+            onPress={() => handleStockSelect(item)}
           >
             <View style={styles.stockItem}>
               <Text style={styles.stockSymbol}>{item.symbol}</Text>
@@ -74,6 +87,36 @@ export default function SearchBar() {
           </TouchableOpacity>
         ))}
       </ScrollView>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>
+              Would you like to add {selectedStock.symbol} to your watch list?
+            </Text>
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity
+                style={[styles.button, styles.buttonConfirm]}
+                onPress={confirmAddToWatchList}
+              >
+                <Text style={styles.textStyle}>Yes</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.button, styles.buttonCancel]}
+                onPress={() => setModalVisible(false)}
+              >
+                <Text style={styles.textStyle}>No</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 }
@@ -127,5 +170,59 @@ const styles = StyleSheet.create({
   companyName: {
     fontSize: 14,
     color: "gray",
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0,0,0,0.5)",
+  },
+  modalView: {
+    margin: 20,
+    width: "70%",
+    backgroundColor: "white",
+    borderRadius: 10,
+    padding: 25,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  modalText: {
+    fontSize: 18,
+    marginBottom: 20,
+    textAlign: "center",
+    fontWeight: "500",
+  },
+  button: {
+    borderRadius: 20,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    elevation: 2,
+    marginTop: 10,
+    minWidth: 100,
+    marginHorizontal: 10,
+  },
+  buttonConfirm: {
+    backgroundColor: "#007bff",
+  },
+  buttonCancel: {
+    backgroundColor: "#007bff",
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
+    fontSize: 16,
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    width: "100%",
   },
 });
