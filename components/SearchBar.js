@@ -170,6 +170,7 @@ const styles = StyleSheet.create({
   companyName: {
     fontSize: 14,
     color: "gray",
+    paddingTop: 10
   },
   centeredView: {
     flex: 1,
