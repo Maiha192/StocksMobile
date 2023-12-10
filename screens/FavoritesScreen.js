@@ -10,7 +10,7 @@ import { WatchListContext } from "../contexts/WatchListProvider";
 import { getData } from "../api/api";
 import { useNavigation } from "@react-navigation/core";
 
-export default function StocksScreen() {
+export default function FavoritesScreen() {
   const { watchList } = useContext(WatchListContext);
   const [stockData, setStockData] = useState({});
   const [selectedStock, setSelectedStock] = useState(null);

@@ -6,7 +6,7 @@ import TabBarIcon from "../components/TabBarIcon";
 import HistoryScreen from "../screens/HistoryScreen";
 import HomeScreen from "../screens/HomeScreen";
 import SearchScreen from "../screens/SearchScreen";
-import StocksScreen from "../screens/StocksScreen";
+import FavoritesScreen from "../screens/FavoritesScreen";
 
 const BottomTab = createBottomTabNavigator();
 const INITIAL_ROUTE_NAME = "Home";
@@ -41,12 +41,12 @@ export default function BottomTabNavigator({ navigation, route }) {
         }}
       />
       <BottomTab.Screen
-        name="Stocks"
-        component={StocksScreen}
+        name="Favorites"
+        component={FavoritesScreen}
         options={{
-          title: "STOCKS",
+          title: "FAVORITES",
           tabBarIcon: ({ focused }) => (
-            <TabBarIcon focused={focused} name="ios-stats-chart" />
+            <TabBarIcon focused={focused} name="ios-heart" />
           ),
         }}
       />
@@ -72,8 +72,8 @@ function getHeaderTitle(route) {
       return "Home";
     case "Search":
       return "Search";
-    case "Stocks":
-      return "Stocks";
+    case "Favorites":
+      return "Favorites";
     case "History":
       return "History";
     default:

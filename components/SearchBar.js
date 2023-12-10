@@ -38,7 +38,7 @@ export default function SearchBar() {
     if (selectedStock) {
       addToWatchList(selectedStock.symbol);
       setModalVisible(false);
-      navigation.navigate("Stocks");
+      navigation.navigate("Favorites");
     }
   }
 
@@ -98,7 +98,7 @@ export default function SearchBar() {
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <Text style={styles.modalText}>
-              Would you like to add {selectedStock?.symbol} to your watch list?
+              Add {selectedStock?.symbol} to your favorites?
             </Text>
             <View style={styles.buttonContainer}>
               <TouchableOpacity

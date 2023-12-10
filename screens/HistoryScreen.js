@@ -50,11 +50,11 @@ export default function HistoryScreen({ route }) {
       </Text>
       <View style={styles.headerContainer}>
         <View style={styles.fixedHeader}>
-          <Text style={[styles.headerCell, styles.date]}>Time</Text>
-          <Text style={[styles.headerCell, styles.number]}>Open</Text>
-          <Text style={[styles.headerCell, styles.number]}>Close</Text>
-          <Text style={[styles.headerCell, styles.number]}>High</Text>
-          <Text style={[styles.headerCell, styles.number]}>Low</Text>
+          <Text style={[styles.headerCell, styles.date]}>DATE</Text>
+          <Text style={[styles.headerCell, styles.number]}>OPEN</Text>
+          <Text style={[styles.headerCell, styles.number]}>CLOSE</Text>
+          <Text style={[styles.headerCell, styles.number]}>HIGH</Text>
+          <Text style={[styles.headerCell, styles.number]}>LOW</Text>
         </View>
         <FlatList
           data={historyData}
