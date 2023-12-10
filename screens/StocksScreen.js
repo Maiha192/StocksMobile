@@ -61,7 +61,8 @@ export default function StocksScreen() {
         onPress={() => handleSelectStock(symbol)}
       >
         <Text style={styles.stockSymbol}>{symbol}</Text>
-        <Text style={styles.stockPrice}>{stock.close}</Text>
+        <Text style={styles.stockOpenPrice}>{parseFloat(stock.open).toFixed(2)}</Text>
+        <Text style={styles.stockClosePrice}>{parseFloat(stock.close).toFixed(2)}</Text>
         <Text style={[styles.stockChange, { color: changeColor }]}>
           {percentageChange}%
         </Text>
@@ -95,14 +96,24 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   stockSymbol: {
+    flex: 2,
     fontWeight: "bold",
     fontSize: 16,
   },
-  stockPrice: {
+  stockOpenPrice: {
+    flex: 3,
     fontSize: 16,
+    textAlign: "right",
+  },
+  stockClosePrice: {
+    flex: 3,
+    fontSize: 16,
+    textAlign: "right",
   },
   stockChange: {
+    flex:3,
     fontSize: 16,
+    textAlign: "right",
   },
   detailView: {
     padding: 16,

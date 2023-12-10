@@ -98,7 +98,7 @@ export default function SearchBar() {
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <Text style={styles.modalText}>
-              Would you like to add {selectedStock.symbol} to your watch list?
+              Would you like to add {selectedStock?.symbol} to your watch list?
             </Text>
             <View style={styles.buttonContainer}>
               <TouchableOpacity
