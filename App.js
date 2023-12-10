@@ -1,13 +1,13 @@
 import { NavigationContainer } from "@react-navigation/native";
 import BottomTabNavigator from "./navigation/BottomTabNavigator";
-import { WatchListProvider } from "./contexts/WatchListProvider";
+import { FavoritesListProvider } from "./contexts/FavoritesListProvider";
 
 export default function App() {
   return (
-    <WatchListProvider>
+    <FavoritesListProvider>
       <NavigationContainer>
         <BottomTabNavigator />
       </NavigationContainer>
-    </WatchListProvider>
+    </FavoritesListProvider>
   );
 }

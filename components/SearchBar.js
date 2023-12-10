@@ -12,7 +12,7 @@ import {
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { useData } from "../api/api";
-import { WatchListContext } from "../contexts/WatchListProvider";
+import { FavoritesListContext } from "../contexts/FavoritesListProvider";
 import { useNavigation } from "@react-navigation/native";
 
 export default function SearchBar() {
@@ -23,7 +23,7 @@ export default function SearchBar() {
   const { loading, data: stocks, error } = useData(apiUrl);
   const screenWidth = Dimensions.get("window").width;
   const navigation = useNavigation();
-  const { addToWatchList } = useContext(WatchListContext);
+  const { addToFavoritesList } = useContext(FavoritesListContext);
 
   function updateSearchText(newText) {
     setSearchText(newText);
@@ -34,9 +34,9 @@ export default function SearchBar() {
     setModalVisible(true);
   }
 
-  function confirmAddToWatchList() {
+  function confirmAddToFavoritesList() {
     if (selectedStock) {
-      addToWatchList(selectedStock.symbol);
+      addToFavoritesList(selectedStock.symbol);
       setModalVisible(false);
       navigation.navigate("Favorites");
     }
@@ -103,7 +103,7 @@ export default function SearchBar() {
             <View style={styles.buttonContainer}>
               <TouchableOpacity
                 style={[styles.button, styles.buttonConfirm]}
-                onPress={confirmAddToWatchList}
+                onPress={confirmAddToFavoritesList}
               >
                 <Text style={styles.textStyle}>Yes</Text>
               </TouchableOpacity>

@@ -1,3 +1,5 @@
+//TODO: Store Favorites List in a persistent local storage on the mobile device.
+// If user shuts down app and comes back next day, watch list will still be available.
 import React, { useContext, useEffect, useState } from "react";
 import {
   View,
@@ -6,19 +8,19 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
-import { WatchListContext } from "../contexts/WatchListProvider";
+import { FavoritesListContext } from "../contexts/FavoritesListProvider";
 import { getData } from "../api/api";
 import { useNavigation } from "@react-navigation/core";
 
 export default function FavoritesScreen() {
-  const { watchList } = useContext(WatchListContext);
+  const { favoritesList } = useContext(FavoritesListContext);
   const [stockData, setStockData] = useState({});
   const [selectedStock, setSelectedStock] = useState(null);
 
   useEffect(() => {
     const fetchStockData = async () => {
       let data = {};
-      for (let symbol of watchList) {
+      for (let symbol of favoritesList) {
         try {
           const stockHistory = await getData(
             `https://aij1hx90oj.execute-api.ap-southeast-2.amazonaws.com/prod/history?symbol=${symbol}`
@@ -31,10 +33,10 @@ export default function FavoritesScreen() {
       setStockData(data);
     };
 
-    if (watchList.length > 0) {
+    if (favoritesList.length > 0) {
       fetchStockData();
     }
-  }, [watchList]);
+  }, [favoritesList]);
 
   const navigation = useNavigation();
 
@@ -46,7 +48,7 @@ export default function FavoritesScreen() {
   const renderStockItem = (symbol) => {
     const stock = stockData[symbol];
     if (!stock) {
-      return null; // or some placeholder content
+      return null; 
     }
     const percentageChange = (
       ((stock.close - stock.open) / stock.open) *
@@ -73,7 +75,7 @@ export default function FavoritesScreen() {
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollView}>
-        {watchList.map(renderStockItem)}
+        {favoritesList.map(renderStockItem)}
       </ScrollView>
     </View>
   );
