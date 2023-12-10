@@ -140,7 +140,6 @@ const styles = StyleSheet.create({
     height: 60,
     padding: 5,
     backgroundColor: "lightgrey",
-    borderRadius: 20,
     marginTop: 0,
   },
   icon: {
