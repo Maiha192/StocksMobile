@@ -168,7 +168,7 @@ const styles = StyleSheet.create({
   },
   companyName: {
     color: "gray",
-    fontSize: 14,
+    fontSize: 20,
     paddingTop: 10,
   },
   container: {
@@ -208,5 +208,34 @@ const styles = StyleSheet.create({
     elevation: 5,
     margin: 20,
     padding: 25,
+    shadowColor: "#000",
+    shadowOffset: {
+      height: 2,
+      width: 0,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    width: "70%",
+  },
+  scrollView: {
+    flex: 1,
+    width: "100%",
+  },
+  stockItem: {
+    borderBottomColor: "lightgray",
+    borderBottomWidth: 1,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+  },
+  stockSymbol: {
+    color: "black",
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  textStyle: {
+    color: "white",
+    fontSize: 16,
+    fontWeight: "bold",
+    textAlign: "center",
   },
 });
