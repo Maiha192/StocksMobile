@@ -1,7 +1,7 @@
+// Import necessary dependencies
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 import * as React from "react";
-
 import TabBarIcon from "../components/TabBarIcon";
 import HistoryScreen from "../screens/HistoryScreen";
 import HomeScreen from "../screens/HomeScreen";
@@ -11,6 +11,7 @@ import FavoritesScreen from "../screens/FavoritesScreen";
 const BottomTab = createBottomTabNavigator();
 const INITIAL_ROUTE_NAME = "Home";
 
+// Main function for bottom tab navigator component
 export default function BottomTabNavigator({ navigation, route }) {
   React.useLayoutEffect(() => {
     if (navigation != null) {
@@ -64,6 +65,7 @@ export default function BottomTabNavigator({ navigation, route }) {
   );
 }
 
+// Function to get title for each tab bar
 function getHeaderTitle(route) {
   const routeName = getFocusedRouteNameFromRoute(route) ?? INITIAL_ROUTE_NAME;
 
