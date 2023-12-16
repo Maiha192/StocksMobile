@@ -3,24 +3,26 @@ import { View, Text, StyleSheet, FlatList } from "react-native";
 import { getData } from "../api/api";
 
 export default function HistoryScreen({ route }) {
-  const { symbol } = route.params;
+  const symbol = route.params?.symbol ?? null;
   const [historyData, setHistoryData] = useState([]);
   const [stockName, setStockName] = useState("");
 
   useEffect(() => {
-    const fetchHistoryData = async () => {
-      try {
-        const data = await getData(
-          `https://aij1hx90oj.execute-api.ap-southeast-2.amazonaws.com/prod/history?symbol=${symbol}`
-        );
-        setHistoryData(data);
-        setStockName(data[0].name);
-      } catch (error) {
-        console.error("Error fetching history data:", error);
-      }
-    };
+    if (symbol) {
+      const fetchHistoryData = async () => {
+        try {
+          const data = await getData(
+            `https://aij1hx90oj.execute-api.ap-southeast-2.amazonaws.com/prod/history?symbol=${symbol}`
+          );
+          setHistoryData(data);
+          setStockName(data[0].name);
+        } catch (error) {
+          console.error("Error fetching history data:", error);
+        }
+      };
 
-    fetchHistoryData();
+      fetchHistoryData();
+    }
   }, [symbol]);
 
   const renderItem = ({ item }) => (
@@ -43,6 +45,13 @@ export default function HistoryScreen({ route }) {
     </View>
   );
 
+  if (!symbol) {
+    return (
+      <View style={styles.container}>
+        <Text>Select a stock from your Favorites list to check stock history!</Text>
+      </View>
+    );
+  }
   return (
     <View style={styles.container}>
       <Text style={styles.stockName}>
