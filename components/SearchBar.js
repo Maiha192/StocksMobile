@@ -1,4 +1,4 @@
-//Import necessary dependencies
+// Import necessary dependencies
 import React, { useContext, useState } from "react";
 import {
   StyleSheet,
@@ -70,6 +70,7 @@ export default function SearchBar() {
 
   return (
     <View style={styles.container}>
+      {/*Search text input*/}
       <View style={[styles.inputContainer, { width: screenWidth }]}>
         <Icon name="ios-search" size={24} color="white" style={styles.icon} />
         <TextInput
@@ -82,6 +83,8 @@ export default function SearchBar() {
           autoCorrect={false}
         />
       </View>
+
+      {/*Result list*/}
       <ScrollView style={styles.scrollView}>
         {filteredStocks.map((item) => (
           <TouchableOpacity
@@ -95,6 +98,8 @@ export default function SearchBar() {
           </TouchableOpacity>
         ))}
       </ScrollView>
+
+      {/*Modal to confirm adding stock to favorites list */}
       <Modal
         animationType="slide"
         transparent={true}
@@ -130,107 +135,78 @@ export default function SearchBar() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "white",
-    alignItems: "center",
-    justifyContent: "flex-start",
+  button: {
+    borderRadius: 20,
+    elevation: 2,
+    marginHorizontal: 10,
+    marginTop: 10,
+    minWidth: 100,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+  },
+  buttonCancel: {
+    backgroundColor: "#007bff",
+  },
+  buttonConfirm: {
+    backgroundColor: "#007bff",
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    width: "100%",
   },
   centered: {
+    alignItems: "center",
     flex: 1,
     justifyContent: "center",
-    alignItems: "center",
   },
-  inputContainer: {
-    flexDirection: "row",
+  centeredView: {
     alignItems: "center",
-    width: "100%",
-    height: 60,
-    padding: 5,
-    backgroundColor: "lightgrey",
-    marginTop: 0,
+    backgroundColor: "rgba(0,0,0,0.5)",
+    flex: 1,
+    justifyContent: "center",
+  },
+  companyName: {
+    color: "gray",
+    fontSize: 14,
+    paddingTop: 10,
+  },
+  container: {
+    alignItems: "center",
+    backgroundColor: "white",
+    flex: 1,
+    justifyContent: "flex-start",
   },
   icon: {
     marginLeft: 10,
     marginRight: 10,
   },
   input: {
-    flex: 1,
     color: "white",
+    flex: 1,
     fontSize: 20,
   },
-  scrollView: {
-    flex: 1,
+  inputContainer: {
+    alignItems: "center",
+    backgroundColor: "lightgrey",
+    flexDirection: "row",
+    height: 60,
+    marginTop: 0,
+    padding: 5,
     width: "100%",
-  },
-  stockItem: {
-    borderBottomWidth: 1,
-    borderBottomColor: "lightgray",
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-  },
-  stockSymbol: {
-    fontWeight: "bold",
-    fontSize: 18,
-    color: "black",
-  },
-  companyName: {
-    fontSize: 14,
-    color: "gray",
-    paddingTop: 10,
-  },
-  centeredView: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "rgba(0,0,0,0.5)",
-  },
-  modalView: {
-    margin: 20,
-    width: "70%",
-    backgroundColor: "white",
-    borderRadius: 10,
-    padding: 25,
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
   },
   modalText: {
     fontSize: 18,
+    fontWeight: "500",
     marginBottom: 20,
     textAlign: "center",
-    fontWeight: "500",
   },
-  button: {
-    borderRadius: 20,
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    elevation: 2,
-    marginTop: 10,
-    minWidth: 100,
-    marginHorizontal: 10,
-  },
-  buttonConfirm: {
-    backgroundColor: "#007bff",
-  },
-  buttonCancel: {
-    backgroundColor: "#007bff",
-  },
-  textStyle: {
-    color: "white",
-    fontWeight: "bold",
-    textAlign: "center",
-    fontSize: 16,
-  },
-  buttonContainer: {
-    flexDirection: "row",
-    justifyContent: "center",
-    width: "100%",
+  modalView: {
+    alignItems: "center",
+    backgroundColor: "white",
+    borderRadius: 10,
+    elevation: 5,
+    margin: 20,
+    padding: 25,
   },
 });
