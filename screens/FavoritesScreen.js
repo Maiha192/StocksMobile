@@ -1,5 +1,7 @@
 //TODO: Store Favorites List in a persistent local storage on the mobile device.
 // If user shuts down app and comes back next day, watch list will still be available.
+
+// Import necessary dependencies
 import React, { useContext, useEffect, useState } from "react";
 import {
   View,
@@ -12,12 +14,14 @@ import { FavoritesListContext } from "../contexts/FavoritesListProvider";
 import { getData } from "../api/api";
 import { useNavigation } from "@react-navigation/core";
 
+// Main function for Favorites Screen
 export default function FavoritesScreen() {
   const { favoritesList } = useContext(FavoritesListContext);
   const [stockData, setStockData] = useState({});
   const [selectedStock, setSelectedStock] = useState(null);
 
   useEffect(() => {
+    // Function to fetch data of stock
     const fetchStockData = async () => {
       let data = {};
       for (let symbol of favoritesList) {
@@ -27,7 +31,7 @@ export default function FavoritesScreen() {
           );
           data[symbol] = stockHistory[0];
         } catch (error) {
-          console.error("Error fetching stock history:", error);
+          console.error("Error fetching stock data:", error);
         }
       }
       setStockData(data);
@@ -40,15 +44,17 @@ export default function FavoritesScreen() {
 
   const navigation = useNavigation();
 
+  // Function to navigate to History screen when user selects a stock
   const handleSelectStock = (symbol) => {
     setSelectedStock(stockData[symbol]);
     navigation.navigate("History", { symbol: symbol });
   };
 
+  // Function to display stock details in the favorites list
   const renderStockItem = (symbol) => {
     const stock = stockData[symbol];
     if (!stock) {
-      return null; 
+      return null;
     }
     const percentageChange = (
       ((stock.close - stock.open) / stock.open) *
@@ -63,8 +69,12 @@ export default function FavoritesScreen() {
         onPress={() => handleSelectStock(symbol)}
       >
         <Text style={styles.stockSymbol}>{symbol}</Text>
-        <Text style={styles.stockOpenPrice}>{parseFloat(stock.open).toFixed(2)}</Text>
-        <Text style={styles.stockClosePrice}>{parseFloat(stock.close).toFixed(2)}</Text>
+        <Text style={styles.stockOpenPrice}>
+          {parseFloat(stock.open).toFixed(2)}
+        </Text>
+        <Text style={styles.stockClosePrice}>
+          {parseFloat(stock.close).toFixed(2)}
+        </Text>
         <Text style={[styles.stockChange, { color: changeColor }]}>
           {percentageChange}%
         </Text>
@@ -72,6 +82,13 @@ export default function FavoritesScreen() {
     );
   };
 
+  if (favoritesList.length === 0) {
+    return (
+      <View style={styles.notification}>
+        <Text>Favorites list is empty!</Text>
+      </View>
+    );
+  }
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollView}>
@@ -81,6 +98,7 @@ export default function FavoritesScreen() {
   );
 }
 
+// Styles
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -113,7 +131,7 @@ const styles = StyleSheet.create({
     textAlign: "right",
   },
   stockChange: {
-    flex:3,
+    flex: 3,
     fontSize: 16,
     textAlign: "right",
   },
@@ -121,5 +139,11 @@ const styles = StyleSheet.create({
     padding: 16,
     borderTopWidth: 1,
     borderTopColor: "#e0e0e0",
+  },
+  notification: {
+    flex: 1,
+    backgroundColor: "white",
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
