@@ -68,14 +68,14 @@ export default function FavoritesScreen() {
         style={styles.stockItem}
         onPress={() => handleSelectStock(symbol)}
       >
-        <Text style={styles.stockSymbol}>{symbol}</Text>
-        <Text style={styles.stockOpenPrice}>
+        <Text style={[styles.cell, styles.stockSymbol]}>{symbol}</Text>
+        <Text style={[styles.cell, styles.stockOpenPrice]}>
           {parseFloat(stock.open).toFixed(2)}
         </Text>
-        <Text style={styles.stockClosePrice}>
+        <Text style={[styles.cell, styles.stockClosePrice]}>
           {parseFloat(stock.close).toFixed(2)}
         </Text>
-        <Text style={[styles.stockChange, { color: changeColor }]}>
+        <Text style={[styles.cell, styles.stockChange, { color: changeColor }]}>
           {percentageChange}%
         </Text>
       </TouchableOpacity>
@@ -94,15 +94,30 @@ export default function FavoritesScreen() {
   // Rendered screen when Favorites list is not empty
   return (
     <View style={styles.container}>
-      <ScrollView style={styles.scrollView}>
-        {favoritesList.map(renderStockItem)}
-      </ScrollView>
+      <View style={styles.headerContainer}>
+        <View style={styles.fixedHeader}>
+          <Text style={[styles.headerCell, styles.date]}>STOCK</Text>
+          <Text style={[styles.headerCell, styles.number]}>OPEN</Text>
+          <Text style={[styles.headerCell, styles.number]}>CLOSE</Text>
+          <Text style={[styles.headerCell, styles.number]}>CHANGE</Text>
+        </View>
+        <ScrollView style={styles.scrollView}>
+          {favoritesList.map(renderStockItem)}
+        </ScrollView>
+      </View>
     </View>
   );
 }
 
 // Styles
 const styles = StyleSheet.create({
+  cell: {
+    alignItems: "center",
+    flex: 1,
+    justifyContent: "center",
+    padding: 10,
+    textAlign: "center",
+  },
   container: {
     backgroundColor: "white",
     flex: 1,
@@ -112,6 +127,29 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     padding: 16,
   },
+  fixedHeader: {
+    backgroundColor: "#f4f4f4",
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderColor: "#ddd",
+    borderTopWidth: StyleSheet.hairlineWidth,
+    flexDirection: "row",
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    position: "absolute",
+    width: "100%",
+    zIndex: 1,
+  },
+  headerCell: {
+    alignItems: "center",
+    flex: 1,
+    fontWeight: "bold",
+    justifyContent: "center",
+    padding: 10,
+    textAlign: "center",
+  },
+  headerContainer: {
+    flex: 1,
+  },
   notification: {
     alignItems: "center",
     backgroundColor: "white",
@@ -120,6 +158,7 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     flex: 1,
+    marginTop: 60,
   },
   stockChange: {
     flex: 3,
