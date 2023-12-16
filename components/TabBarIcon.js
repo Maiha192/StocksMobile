@@ -1,7 +1,9 @@
+// Import necessary dependencies
 import { StyleSheet, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import * as React from "react";
 
+// Main function for Tab Bar Icon component
 export default function TabBarIcon(props) {
   return (
     <View style={styles.iconContainer}>
@@ -14,6 +16,7 @@ export default function TabBarIcon(props) {
   );
 }
 
+// Styles
 const styles = StyleSheet.create({
   iconContainer: {
     flex: 1,
