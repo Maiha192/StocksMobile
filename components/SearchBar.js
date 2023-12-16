@@ -134,6 +134,7 @@ export default function SearchBar() {
   );
 }
 
+// Styles
 const styles = StyleSheet.create({
   button: {
     borderRadius: 20,
