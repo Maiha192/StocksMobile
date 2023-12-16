@@ -104,26 +104,24 @@ export default function FavoritesScreen() {
 // Styles
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: "white",
+    flex: 1,
+  },
+  detailView: {
+    borderTopColor: "#e0e0e0",
+    borderTopWidth: 1,
+    padding: 16,
+  },
+  notification: {
+    alignItems: "center",
+    backgroundColor: "white",
+    flex: 1,
+    justifyContent: "center",
   },
   scrollView: {
     flex: 1,
   },
-  stockItem: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    padding: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: "#e0e0e0",
-    backgroundColor: "white",
-  },
-  stockSymbol: {
-    flex: 2,
-    fontWeight: "bold",
-    fontSize: 16,
-  },
-  stockOpenPrice: {
+  stockChange: {
     flex: 3,
     fontSize: 16,
     textAlign: "right",
@@ -133,20 +131,22 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textAlign: "right",
   },
-  stockChange: {
+  stockItem: {
+    backgroundColor: "white",
+    borderBottomColor: "#e0e0e0",
+    borderBottomWidth: 1,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    padding: 16,
+  },
+  stockOpenPrice: {
     flex: 3,
     fontSize: 16,
     textAlign: "right",
   },
-  detailView: {
-    padding: 16,
-    borderTopWidth: 1,
-    borderTopColor: "#e0e0e0",
-  },
-  notification: {
-    flex: 1,
-    backgroundColor: "white",
-    justifyContent: "center",
-    alignItems: "center",
+  stockSymbol: {
+    flex: 2,
+    fontSize: 16,
+    fontWeight: "bold",
   },
 });

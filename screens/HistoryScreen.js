@@ -85,68 +85,68 @@ export default function HistoryScreen({ route }) {
 
 // Styles
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    paddingTop: 5,
-  },
-  headerContainer: {
-    flex: 1,
-  },
-  fixedHeader: {
-    flexDirection: "row",
-    backgroundColor: "#f4f4f4",
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderTopWidth: StyleSheet.hairlineWidth,
-    borderColor: "#ddd",
-    position: "absolute",
-    width: "100%",
-    zIndex: 1,
-    paddingHorizontal: 10,
-    paddingVertical: 10,
-  },
-  headerCell: {
-    flex: 1,
-    padding: 10,
-    justifyContent: "center",
-    alignItems: "center",
-    textAlign: "center",
-    fontWeight: "bold",
-  },
-  row: {
-    flexDirection: "row",
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderColor: "#ddd",
-    paddingHorizontal: 10,
-    paddingVertical: 10,
-  },
   cell: {
+    alignItems: "center",
     flex: 1,
     justifyContent: "center",
-    alignItems: "center",
-    textAlign: "center",
     padding: 10,
+    textAlign: "center",
+  },
+  container: {
+    backgroundColor: "#fff",
+    flex: 1,
+    paddingTop: 5,
   },
   date: {
     flex: 2,
     textAlign: "left",
   },
-  number: {
-    flex: 1,
+  fixedHeader: {
+    backgroundColor: "#f4f4f4",
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderColor: "#ddd",
+    borderTopWidth: StyleSheet.hairlineWidth,
+    flexDirection: "row",
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    position: "absolute",
+    width: "100%",
+    zIndex: 1,
   },
-  stockName: {
-    fontSize: 20,
+  headerCell: {
+    alignItems: "center",
+    flex: 1,
     fontWeight: "bold",
-    textAlign: "center",
+    justifyContent: "center",
     padding: 10,
+    textAlign: "center",
+  },
+  headerContainer: {
+    flex: 1,
   },
   list: {
     marginTop: 60,
   },
   notification: {
-    flex: 1,
-    backgroundColor: "white",
-    justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "white",
+    flex: 1,
+    justifyContent: "center",
+  },
+  number: {
+    flex: 1,
+  },
+  row: {
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderColor: "#ddd",
+    flexDirection: "row",
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+  },
+  stockName: {
+    fontSize: 20,
+    fontWeight: "bold",
+    padding: 10,
+    textAlign: "center",
   },
 });

@@ -14,23 +14,23 @@ export default function HomeScreen() {
 
 // Styles
 const styles = StyleSheet.create({
+  brandName: {
+    color: "black",
+    fontSize: 32,
+    fontWeight: "bold",
+    marginTop: 20,
+  },
   container: {
-    flex: 1,
-    backgroundColor: "white",
-    justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "white",
+    flex: 1,
+    justifyContent: "center",
     padding: 20,
   },
   logo: {
-    width: 150,
     height: 150,
-    resizeMode: "contain",
     marginBottom: 20,
-  },
-  brandName: {
-    fontSize: 32,
-    fontWeight: "bold",
-    color: "black",
-    marginTop: 20,
+    resizeMode: "contain",
+    width: 150,
   },
 });
