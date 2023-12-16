@@ -1,21 +1,25 @@
+// Import necessary dependencies
 import React, { createContext, useState } from "react";
 
+// Create context for favorites list
 export const FavoritesListContext = createContext({
   favoritesList: [],
   addToFavoritesList: () => {},
-  setFavoritesList: () => {}, // Ensure you're providing a setter function
+  setFavoritesList: () => {},
 });
 
+// Create context provider
 export const FavoritesListProvider = ({ children }) => {
   const [favoritesList, setFavoritesList] = useState([]);
 
+  // Add new stock to favorites list and maintain alphabetical order
   const addToFavoritesList = (symbol) => {
-    setFavoritesList((prevFavoritesList) => {
-      if (!prevFavoritesList.includes(symbol)) {
-        const newFavoritesList = [...prevFavoritesList, symbol].sort();
+    setFavoritesList((oldFavoritesList) => {
+      if (!oldFavoritesList.includes(symbol)) {
+        const newFavoritesList = [...oldFavoritesList, symbol].sort();
         return newFavoritesList;
       }
-      return prevFavoritesList;
+      return oldFavoritesList;
     });
   };
 
