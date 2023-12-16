@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
   },
   companyName: {
     color: "gray",
-    fontSize: 20,
+    fontSize: 16,
     paddingTop: 10,
   },
   container: {
