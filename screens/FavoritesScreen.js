@@ -82,6 +82,7 @@ export default function FavoritesScreen() {
     );
   };
 
+  // Rendered screen when Favorites list is empty
   if (favoritesList.length === 0) {
     return (
       <View style={styles.notification}>
@@ -89,6 +90,8 @@ export default function FavoritesScreen() {
       </View>
     );
   }
+
+  // Rendered screen when Favorites list is not empty
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollView}>

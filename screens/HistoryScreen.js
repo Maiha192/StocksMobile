@@ -1,13 +1,16 @@
+// Import necessary dependencies
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, FlatList } from "react-native";
 import { getData } from "../api/api";
 
+// Main function for History Screen
 export default function HistoryScreen({ route }) {
   const symbol = route.params?.symbol ?? null;
   const [historyData, setHistoryData] = useState([]);
   const [stockName, setStockName] = useState("");
 
   useEffect(() => {
+    // Function to fetch stock history data
     if (symbol) {
       const fetchHistoryData = async () => {
         try {
@@ -17,7 +20,7 @@ export default function HistoryScreen({ route }) {
           setHistoryData(data);
           setStockName(data[0].name);
         } catch (error) {
-          console.error("Error fetching history data:", error);
+          console.error("Error fetching stock history data:", error);
         }
       };
 
@@ -25,6 +28,7 @@ export default function HistoryScreen({ route }) {
     }
   }, [symbol]);
 
+  // Function to display stock data in each row
   const renderItem = ({ item }) => (
     <View style={styles.row}>
       <Text style={[styles.cell, styles.date]}>
@@ -45,13 +49,16 @@ export default function HistoryScreen({ route }) {
     </View>
   );
 
+  // Rendered screen when no stock selected from Favorites list
   if (!symbol) {
     return (
-      <View style={styles.container}>
-        <Text>Select a stock from your Favorites list to check stock history!</Text>
+      <View style={styles.notification}>
+        <Text>Select a stock from Favorites list for stock history!</Text>
       </View>
     );
   }
+
+  // Rendered screen when a stock selected from Favorites list
   return (
     <View style={styles.container}>
       <Text style={styles.stockName}>
@@ -76,6 +83,7 @@ export default function HistoryScreen({ route }) {
   );
 }
 
+// Styles
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -134,5 +142,11 @@ const styles = StyleSheet.create({
   },
   list: {
     marginTop: 60,
+  },
+  notification: {
+    flex: 1,
+    backgroundColor: "white",
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
