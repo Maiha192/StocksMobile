@@ -1,3 +1,4 @@
+//Import necessary dependencies
 import React, { useContext, useState } from "react";
 import {
   StyleSheet,
@@ -15,6 +16,7 @@ import { useData } from "../api/api";
 import { FavoritesListContext } from "../contexts/FavoritesListProvider";
 import { useNavigation } from "@react-navigation/native";
 
+// Main function to show the SearchBar component
 export default function SearchBar() {
   const [searchText, setSearchText] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
@@ -25,15 +27,18 @@ export default function SearchBar() {
   const navigation = useNavigation();
   const { addToFavoritesList } = useContext(FavoritesListContext);
 
+  // Function to update the search text
   function updateSearchText(newText) {
     setSearchText(newText);
   }
 
+  // Function to show modal when user selects a stock
   function handleStockSelect(stock) {
     setSelectedStock(stock);
     setModalVisible(true);
   }
 
+  // Function to navigate to the Favorites screen after user confirms to add a stock to favorites list
   function confirmAddToFavoritesList() {
     if (selectedStock) {
       addToFavoritesList(selectedStock.symbol);
@@ -42,12 +47,14 @@ export default function SearchBar() {
     }
   }
 
+  // Filter stocks based on user's search text
   const filteredStocks = stocks.filter(
     (stock) =>
       stock.symbol.toLowerCase().includes(searchText.toLowerCase()) ||
       stock.name.toLowerCase().includes(searchText.toLowerCase())
   );
 
+  // Show spinner while loading
   if (loading) {
     return (
       <View style={styles.centered}>
@@ -56,6 +63,7 @@ export default function SearchBar() {
     );
   }
 
+  // Show error message if any
   if (error) {
     return <Text>Error: {error.message}</Text>;
   }
@@ -169,7 +177,7 @@ const styles = StyleSheet.create({
   companyName: {
     fontSize: 14,
     color: "gray",
-    paddingTop: 10
+    paddingTop: 10,
   },
   centeredView: {
     flex: 1,
